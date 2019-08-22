@@ -13,8 +13,8 @@ class Cat(models.Model):
     birthday = models.DateField(verbose_name='День рождения')
     breed = models.CharField(max_length=30, verbose_name='Порода')
     sex = models.CharField(max_length=1, verbose_name='Пол', choices=SEX_CHOICES)  # m/f
-    owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.CASCADE, null=False)
-    # owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.CASCADE, null=False)
+    # # owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
     datetime = models.DateTimeField(verbose_name='Добавлен', auto_now_add=True)
 
 
