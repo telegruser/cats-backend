@@ -74,7 +74,7 @@ DATABASES = {
         'NAME': 'qgr4mak5mmbu3r5r',
         'USER': 'nuat27kb7mvpfsfd',
         'PASSWORD': 'rf8x36857whi984d',
-        'HOST': 'https://ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',   # Or an IP Address that your DB is hosted on
+        'HOST': 'ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
