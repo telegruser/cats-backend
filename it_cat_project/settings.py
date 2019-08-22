@@ -76,7 +76,10 @@ DATABASES = {
         'PASSWORD': 'rf8x36857whi984d',
         'HOST': 'ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
+
+        # 'OPTIONS': {'sslmode': None},
     }
+
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,4 +120,8 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 django_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
+# print(DATABASES)
+try:
+    del DATABASES['default']['OPTIONS']['sslmode']
+except:
+    pass
