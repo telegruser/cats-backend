@@ -67,16 +67,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'it_cat_project.wsgi.application'
 
 DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'qgr4mak5mmbu3r5r',
-        'USER': 'nuat27kb7mvpfsfd',
-        'PASSWORD': 'rf8x36857whi984d',
-        'HOST': 'ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
+    # 'default': {
+    #     # 'ENGINE': 'django.db.backends.sqlite3',
+    #     # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'qgr4mak5mmbu3r5r',
+    #     'USER': 'nuat27kb7mvpfsfd',
+    #     'PASSWORD': 'rf8x36857whi984d',
+    #     'HOST': 'ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',   # Or an IP Address that your DB is hosted on
+    #     'PORT': '3306',
+    # }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -101,7 +101,7 @@ USE_L10N = True
 USE_TZ = True
 
 # DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
-# DATABASES['default'] = dj_database_url.parse('mysql://nuat27kb7mvpfsfd:rf8x36857whi984d@ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qgr4mak5mmbu3r5r', conn_max_age=600)
+DATABASES['default'] = dj_database_url.parse('mysql://nuat27kb7mvpfsfd:rf8x36857whi984d@ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qgr4mak5mmbu3r5r', conn_max_age=600)
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
