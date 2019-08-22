@@ -100,8 +100,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
-DATABASES['default'] = dj_database_url.parse('mysql://nuat27kb7mvpfsfd:rf8x36857whi984d@ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qgr4mak5mmbu3r5r', conn_max_age=600)
+DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
+# DATABASES['default'] = dj_database_url.parse('mysql://nuat27kb7mvpfsfd:rf8x36857whi984d@ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qgr4mak5mmbu3r5r', conn_max_age=600)
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
