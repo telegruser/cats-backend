@@ -4,3 +4,7 @@ staticfiles
 .env
 *.sqlite3
 .idea/
+.idea/**
+.idea/**.xml
+.idea/**.iml
+.idea/**.meta
