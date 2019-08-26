@@ -60,8 +60,6 @@ INSTALLED_APPS = [
     # 'corsheaders',
     # 'registration'
     # 'registration.apps.RegistrationConfig',
-    # 'provider',
-    # 'provider.oauth2',
 ]
 
 
