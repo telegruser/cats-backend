@@ -1,47 +1,100 @@
-from django.contrib.auth.models import User
-from rest_framework import viewsets, permissions, generics
-from rest_framework.mixins import CreateModelMixin
+from rest_framework import viewsets, permissions
 from rest_framework.permissions import AllowAny
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+import requests
 
-from cat_app.permissions import IsAuthenticatedOrCreate
-from .serializers import CatsSerializer, RegistrationSerializer
+from .serializers import CatsSerializer
+from .serializers import CreateUserSerializer
 from .models import Cat
-from django.http import HttpResponse
 
 
-# class LogInUser(viewsets.ModelViewSet):
-#
-#     permission_classes = [AllowAny]
-#     serializer_class = LogInSerializer
-#
-#     """ Представление которое отвечает конечной точке API """
-#     def get(self, request, *args, **kwargs):
-#         return HttpResponse('Hello, OAuth2!')
+CLIENT_ID = '1FeGEm1s6Tg1C5f5Yr9Ha4DVGqTAyyPi36pg9vYc'
+CLIENT_SECRET = 'sNwNEXOJ8OtQZpE7D9HYcQHTMHZMIIrteQxGmUgSBfvRiu5JIpgCzqi6YSIguh6jnjlEZHfgM8NE1QH4K9jDQh3yNBn01TQ8mack' \
+                'Zz4nDdKx4eDI9a7ceUn2ruUfqi1o'
+AUTH_SERVER_URL = 'http://127.0.0.1:8000/'
 
 
-# @method_decorator(csrf_exempt, name='dispatch')
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    """
+    {"username": "username", "password": "1234abcd"}
+    """
+    print("запрс регистрации: " + request.data)
+    serializer = CreateUserSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        r = requests.post(AUTH_SERVER_URL + 'o/token/', data={
+                'grant_type': 'password',
+                'username': request.data['username'],
+                'password': request.data['password'],
+                'client_id': CLIENT_ID,
+                'client_secret': CLIENT_SECRET,
+            },
+        )
+        return Response(r.json())
+    return Response(serializer.errors)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def token(request):
+    """
+    {"username": "username", "password": "1234abcd"}
+    """
+    r = requests.post(AUTH_SERVER_URL + 'o/token/', data={
+            'grant_type': 'password',
+            'username': request.data['username'],
+            'password': request.data['password'],
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+        },
+    )
+    print('запрос токена:' + str(request.data))
+    return Response(r.json())
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def refresh_token(request):
+    """
+    {"refresh_token": "<token>"}
+    """
+    r = requests.post(AUTH_SERVER_URL + 'o/token/', data={
+            'grant_type': 'refresh_token',
+            'refresh_token': request.data['refresh_token'],
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+        },
+    )
+    return Response(r.json())
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def revoke_token(request):
+    """
+    {"token": "<token>"}
+    """
+    print('запрос отзыва токена ' + str(request.data))
+    r = requests.post(AUTH_SERVER_URL + 'o/revoke_token/', data={
+            'token': request.data['token'],
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+        },
+    )
+    if r.status_code == requests.codes.ok:
+        print('токен отозван ' + str(request.data))
+        return Response({'message': 'token revoked'}, r.status_code)
+    print('не удалось отозвать токен ' + str(request.data))
+    return Response(r.json(), r.status_code)
+
+
 class CatViewSet(viewsets.ModelViewSet):
 
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = CatsSerializer
-    # authentication_classes = [OAuth2Authentication]
 
     def get_queryset(self):
         return Cat.objects.filter(owner=self.request.user)
-        # return Cat.objects.filter()
-
-
-# class LogInView(generics.CreateAPIView):
-#     # queryset = User.objects.all()
-#     serializer_class = LogInSerializer
-#     permission_classes = (IsAuthenticatedOrCreate,)
-#
-#     def get_queryset(self):
-#         return
-
-
-class RegisterViewSet(CreateModelMixin, GenericViewSet):
-    model = User
-    serializer_class = RegistrationSerializer
-    permission_classes = [AllowAny]
