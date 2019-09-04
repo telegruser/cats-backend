@@ -91,7 +91,6 @@ DATABASES = {
         'HOST': 'ixqxr3ajmyapuwmi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
-
 }
 
 AUTH_PASSWORD_VALIDATORS = [
